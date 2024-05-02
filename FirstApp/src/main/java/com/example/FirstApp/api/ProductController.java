@@ -11,7 +11,7 @@ public class ProductController {
 
     @GetMapping("/test")
     public String productTest() {
-        return "<h1>test</h1>";
+        return "<h1>test1234</h1>";
     }
 
     @GetMapping
