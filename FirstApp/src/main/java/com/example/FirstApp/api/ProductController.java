@@ -23,7 +23,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    Product getAllProducts(@PathVariable Integer id) {
+    Product getById(@PathVariable Integer id) {
         return productRepository.findById(id).get();
     }
 
