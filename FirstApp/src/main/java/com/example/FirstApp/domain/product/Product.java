@@ -33,4 +33,20 @@ public class Product {
     public int getPriceWithTVA() {
         return priceWithTVA;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPriceWithoutTVA(int priceWithoutTVA) {
+        this.priceWithoutTVA = priceWithoutTVA;
+    }
+
+    public void setTVA(int TVA) {
+        this.TVA = TVA;
+    }
+
+    public void setPriceWithTVA(int priceWithTVA) {
+        this.priceWithTVA = priceWithTVA;
+    }
 }
