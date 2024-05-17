@@ -47,6 +47,9 @@ public class ProductController {
         Product productToBeSaved = new Product();
 
         productToBeSaved.setName(commandDto.getName());
+        productToBeSaved.setPriceWithoutTVA(commandDto.getPriceWithoutTVA());
+        productToBeSaved.setTVA(commandDto.getTVA());
+        productToBeSaved.setPriceWithTVA(commandDto.getPriceWithTVA());
 
         return productRepository.save(productToBeSaved);
     }
