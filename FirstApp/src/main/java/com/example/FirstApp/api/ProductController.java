@@ -5,6 +5,7 @@ import com.example.FirstApp.api.dto.ProductDtoAdauga;
 import com.example.FirstApp.api.dto.ProductDtoModifica;
 import com.example.FirstApp.domain.product.Product;
 import com.example.FirstApp.domain.product.ProductRepository;
+import com.example.FirstApp.exception.BadRequestException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,7 +66,12 @@ public class ProductController {
     ) {
 
         Product productToBeModified = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Nu exista produsul cu id-ul:" + id));
+                .orElseThrow(() -> new BadRequestException("Nu exista produsul cu id-ul:" + id));
+
+        /** verificare calcule price/tva */
+        if (modificaDto.getPriceWithoutTVA() + modificaDto.getTva() != modificaDto.getPriceWithTVA()) {
+            throw new BadRequestException("Pretul fara tva+tva nu corespunde nu pretul cu tva!");
+        }
 
         productToBeModified.setName(modificaDto.getName());
         productToBeModified.setPriceWithoutTVA(modificaDto.getPriceWithoutTVA());
