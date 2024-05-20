@@ -1,11 +1,15 @@
 package com.example.FirstApp.api.dto;
 
-public class ProductDtoAdauga {
+public class ProductDtoModifica {
 
     String name;
     int priceWithoutTVA;
     int tva;
     int priceWithTVA;
+
+    public String getName() {
+        return name;
+    }
 
     public int getPriceWithoutTVA() {
         return priceWithoutTVA;
@@ -17,9 +21,5 @@ public class ProductDtoAdauga {
 
     public int getPriceWithTVA() {
         return priceWithTVA;
-    }
-
-    public String getName() {
-        return name;
     }
 }

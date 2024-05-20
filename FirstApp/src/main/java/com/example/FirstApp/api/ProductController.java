@@ -2,6 +2,7 @@ package com.example.FirstApp.api;
 
 
 import com.example.FirstApp.api.dto.ProductDtoAdauga;
+import com.example.FirstApp.api.dto.ProductDtoModifica;
 import com.example.FirstApp.domain.product.Product;
 import com.example.FirstApp.domain.product.ProductRepository;
 import org.springframework.web.bind.annotation.*;
@@ -48,12 +49,38 @@ public class ProductController {
 
         productToBeSaved.setName(commandDto.getName());
         productToBeSaved.setPriceWithoutTVA(commandDto.getPriceWithoutTVA());
-        productToBeSaved.setTVA(commandDto.getTVA());
+        productToBeSaved.setTVA(commandDto.getTva());
         productToBeSaved.setPriceWithTVA(commandDto.getPriceWithTVA());
 
         return productRepository.save(productToBeSaved);
     }
 
+    /**
+     * Update
+     */
+    @PostMapping("/modifica/{id}")
+    Product modifica(
+            @PathVariable Integer id,
+            @RequestBody ProductDtoModifica modificaDto
+    ) {
+
+        Product productToBeModified = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nu exista produsul cu id-ul:" + id));
+
+        productToBeModified.setName(modificaDto.getName());
+        productToBeModified.setPriceWithoutTVA(modificaDto.getPriceWithoutTVA());
+        productToBeModified.setTVA(modificaDto.getTva());
+        productToBeModified.setPriceWithTVA(modificaDto.getPriceWithTVA());
+
+        return productRepository.save(productToBeModified);
+
+    }
+
+    /**Discount utilizator->cupon pt produs/cupon pt tot cosul */
+
+    /**
+     * Delete
+     */
 
     @GetMapping("/test")
     public String productTest() {
