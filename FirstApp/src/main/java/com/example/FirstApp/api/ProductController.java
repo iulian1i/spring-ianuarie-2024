@@ -6,6 +6,7 @@ import com.example.FirstApp.api.dto.ProductDtoModifica;
 import com.example.FirstApp.domain.product.Product;
 import com.example.FirstApp.domain.product.ProductRepository;
 import com.example.FirstApp.exception.BadRequestException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -82,11 +83,49 @@ public class ProductController {
 
     }
 
-    /**Discount utilizator->cupon pt produs/cupon pt tot cosul */
+    /**
+     * Discount utilizator->cupon pt produs/cupon pt tot cosul
+     */
+    @PostMapping("/checkout/discount/{id}")
+    Product discount(@PathVariable Integer id,
+                     @RequestParam String discount) {
+
+        Product productDiscount = productRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Nu exista produsul cu id-ul:" + id));
+
+        double procentDiscount = 0;
+        if (discount == null || !discount.equals("java")) {
+            procentDiscount = 1;
+        } else {
+            procentDiscount = (double) 50 / 100;
+        }
+
+        int priceWithoutTva = (int) (productDiscount.getPriceWithoutTVA() * procentDiscount);
+        int tva = (int) (productDiscount.getTVA() * procentDiscount);
+        int priceWithTva = (int) (productDiscount.getPriceWithTVA() * procentDiscount);
+
+        productDiscount.setPriceWithoutTVA(priceWithoutTva);
+        productDiscount.setTVA(tva);
+        productDiscount.setPriceWithTVA(priceWithTva);
+
+        return productDiscount;
+
+    }
+
 
     /**
      * Delete
      */
+    @DeleteMapping("/sterge/{id}")
+    ResponseEntity<String> sterge(@PathVariable Integer id) {
+
+        Product productToBeDeleted = productRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Nu exista produsul cu id-ul:" + id));
+
+        productRepository.delete(productToBeDeleted);
+        return ResponseEntity.ok("Produsul a fost sters!");
+
+    }
 
     @GetMapping("/test")
     public String productTest() {
