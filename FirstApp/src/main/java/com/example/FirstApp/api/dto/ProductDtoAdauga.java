@@ -2,6 +2,7 @@ package com.example.FirstApp.api.dto;
 
 public class ProductDtoAdauga {
 
+//    @NotEmpty(message = "Trebuie completat numele produsului!")
     String name;
     int priceWithoutTVA;
     int tva;

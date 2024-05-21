@@ -6,6 +6,7 @@ import com.example.FirstApp.api.dto.ProductDtoModifica;
 import com.example.FirstApp.domain.product.Product;
 import com.example.FirstApp.domain.product.ProductRepository;
 import com.example.FirstApp.exception.BadRequestException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +49,10 @@ public class ProductController {
     Product adauga(@RequestBody ProductDtoAdauga commandDto) {
 
         Product productToBeSaved = new Product();
+
+        if (commandDto.getName() == null || commandDto.getName() == " ") {
+            throw new BadRequestException("Trebuie completat un nume pentru produs!");
+        }
 
         productToBeSaved.setName(commandDto.getName());
         productToBeSaved.setPriceWithoutTVA(commandDto.getPriceWithoutTVA());
@@ -123,7 +128,7 @@ public class ProductController {
                 .orElseThrow(() -> new BadRequestException("Nu exista produsul cu id-ul:" + id));
 
         productRepository.delete(productToBeDeleted);
-        return ResponseEntity.ok("Produsul a fost sters!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Produsul a fost sters!");
 
     }
 
