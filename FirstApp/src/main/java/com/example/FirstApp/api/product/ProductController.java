@@ -1,8 +1,8 @@
-package com.example.FirstApp.api;
+package com.example.FirstApp.api.product;
 
 
-import com.example.FirstApp.api.dto.ProductDtoAdauga;
-import com.example.FirstApp.api.dto.ProductDtoModifica;
+import com.example.FirstApp.api.product.dto.ProductDtoAdauga;
+import com.example.FirstApp.api.product.dto.ProductDtoModifica;
 import com.example.FirstApp.domain.product.Product;
 import com.example.FirstApp.domain.product.ProductRepository;
 import com.example.FirstApp.exception.BadRequestException;
@@ -25,6 +25,7 @@ public class ProductController {
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+//        return productRepository.findAllProducts();
     }
 
     @GetMapping("/products/{id}")

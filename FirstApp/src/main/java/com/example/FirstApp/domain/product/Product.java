@@ -13,6 +13,7 @@ public class Product {
     int priceWithoutTVA;
     int TVA;
     int priceWithTVA;
+    Long categoryId;
 
     public int getId() {
         return id;

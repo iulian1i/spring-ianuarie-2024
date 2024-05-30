@@ -1,4 +1,4 @@
-package com.example.FirstApp.api.dto;
+package com.example.FirstApp.api.product.dto;
 
 public class ProductDtoAdauga {
 
