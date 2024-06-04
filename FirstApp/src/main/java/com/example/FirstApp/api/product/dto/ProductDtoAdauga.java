@@ -2,11 +2,12 @@ package com.example.FirstApp.api.product.dto;
 
 public class ProductDtoAdauga {
 
-//    @NotEmpty(message = "Trebuie completat numele produsului!")
+    //    @NotEmpty(message = "Trebuie completat numele produsului!")
     String name;
     int priceWithoutTVA;
     int tva;
     int priceWithTVA;
+    Long categoryId;
 
     public int getPriceWithoutTVA() {
         return priceWithoutTVA;
@@ -22,5 +23,9 @@ public class ProductDtoAdauga {
 
     public String getName() {
         return name;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
     }
 }

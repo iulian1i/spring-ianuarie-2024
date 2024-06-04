@@ -35,6 +35,10 @@ public class Product {
         return priceWithTVA;
     }
 
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -49,5 +53,9 @@ public class Product {
 
     public void setPriceWithTVA(int priceWithTVA) {
         this.priceWithTVA = priceWithTVA;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

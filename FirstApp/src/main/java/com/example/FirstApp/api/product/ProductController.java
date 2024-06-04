@@ -3,6 +3,7 @@ package com.example.FirstApp.api.product;
 
 import com.example.FirstApp.api.product.dto.ProductDtoAdauga;
 import com.example.FirstApp.api.product.dto.ProductDtoModifica;
+import com.example.FirstApp.domain.category.CategoryRepository;
 import com.example.FirstApp.domain.product.Product;
 import com.example.FirstApp.domain.product.ProductRepository;
 import com.example.FirstApp.exception.BadRequestException;
@@ -17,9 +18,11 @@ import java.util.List;
 public class ProductController {
 
     final ProductRepository productRepository;
+    final CategoryRepository categoryRepository;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/products")
@@ -55,12 +58,28 @@ public class ProductController {
             throw new BadRequestException("Trebuie completat un nume pentru produs!");
         }
 
+        /**Verificam daca exista aceasta categorie salvata deja in baza de date*/
+        categoryRepository.findById(commandDto.getCategoryId())
+                .orElseThrow(() -> new BadRequestException("Nu exista categoria selectata!"));
+
         productToBeSaved.setName(commandDto.getName());
         productToBeSaved.setPriceWithoutTVA(commandDto.getPriceWithoutTVA());
         productToBeSaved.setTVA(commandDto.getTva());
         productToBeSaved.setPriceWithTVA(commandDto.getPriceWithTVA());
+        productToBeSaved.setCategoryId(commandDto.getCategoryId());
 
         return productRepository.save(productToBeSaved);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    List<Product> getAllProductsByCategoryId(
+            @PathVariable Long categoryId
+    ) {
+        /**Verificam daca exista aceasta categorie salvata deja in baza de date*/
+        categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new BadRequestException("Nu exista categoria selectata!"));
+
+        return productRepository.findAllByCategoryId(categoryId);
     }
 
     /**

@@ -12,4 +12,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             """)
     List<Product> findAllProducts();
 
+    @Query("""
+            SELECT p FROM Product p WHERE p.categoryId = :categoryId
+            """)
+    List<Product> findAllByCategoryId(Long categoryId);
+
 }
