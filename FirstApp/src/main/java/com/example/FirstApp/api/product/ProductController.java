@@ -1,6 +1,7 @@
 package com.example.FirstApp.api.product;
 
 
+import com.example.FirstApp.api.product.dto.ProductCategoryDto;
 import com.example.FirstApp.api.product.dto.ProductDtoAdauga;
 import com.example.FirstApp.api.product.dto.ProductDtoModifica;
 import com.example.FirstApp.domain.category.CategoryRepository;
@@ -149,6 +150,15 @@ public class ProductController {
 
         productRepository.delete(productToBeDeleted);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Produsul a fost sters!");
+
+    }
+
+    @GetMapping("/product-category-details/{productId}")
+    ProductCategoryDto getProductAndCategoryDetailByProductId(
+            @PathVariable int productId
+    ) {
+        //TODO: validam daca exista acest produs
+        return productRepository.findProductAndCategoryDetailsByProductId(productId);
 
     }
 
